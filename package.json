@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/guijun13/backOcean/issues"
   },
-  "homepage": "https://github.com/guijun13/backOcean#readme"
+  "homepage": "https://github.com/guijun13/backOcean#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
 }
