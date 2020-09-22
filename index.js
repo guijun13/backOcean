@@ -14,8 +14,8 @@ app.get('/', (req, res) => {
 // CRUD de uma envio de mensagens
 
 const mensagens = [
-  "Mensagem 1",
-  "Mensagem 2"
+  "Mensagem 0",
+  "Mensagem 1"
 ];
 
 // Read all
@@ -25,26 +25,41 @@ app.get('/mensagens', (req, res) => {
 
 // Create
 app.post('/mensagens', (req, res) => {
+
   // Obtendo a mensagem que foi recebida através do body da requisição
   const mensagem = req.body.mensagem;
   // Insiro a mensagem na lista de mensagens
   mensagens.push(mensagem);
 
+  // Define o id da mensagem criada
   const id = mensagens.length - 1;
 
-  res.send(`Criar uma mensagem com o corpo: ${mensagem}`);
-  // Exibido o ID da mensagem, que no caso é o índice que ela foi adicionada
-  // res.send(`Criar uma mensagem com id: ${id}`);
+  // Exibido o ID e mensagem, que no caso é o índice que ela foi adicionada
+  res.send(`Mensagem: ${mensagem} de id: ${id} foi criada`);
 });
 
 // Read one
 app.get('/mensagens/:id', (req, res) => {
-  res.send('Exibe uma mensagem selecionada pelo id informado');
+  const id = req.params.id; //pega o id atravez dos parametros da req
+
+  const mensagem = mensagens[id]; //acesa a msg conforme o id
+
+  res.json(mensagem);
+  // res.json({
+  //   id,
+  //   mensagem
+  // });
 });
 
 // Update one
 app.put('/mensagens/:id', (req, res) => {
-  res.send('Atualiza uma mensagem selecionada pelo id informado');
+  const id = req.params.id;
+
+  // const mensagem = mensagens[id];
+
+  mensagens[id] = req.body.mensagem;
+
+  res.send(`${id} Atualiza uma mensagem selecionada pelo id informado`);
 });
 
 // Delete one
