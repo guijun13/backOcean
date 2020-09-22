@@ -13,10 +13,22 @@ app.get('/', (req, res) => {
 
 // CRUD de uma envio de mensagens
 
+// const mensagens = [
+//   "Mensagem 0",
+//   "Mensagem 1"
+// ];
+
 const mensagens = [
-  "Mensagem 0",
-  "Mensagem 1"
-];
+  {
+    id: 0,
+    texto: "Mensagem 0"
+  },
+  {
+    id: 1,
+    texto: "Mensagem 1"
+  }
+
+]
 
 // Read all
 app.get('/mensagens', (req, res) => {
@@ -27,15 +39,19 @@ app.get('/mensagens', (req, res) => {
 app.post('/mensagens', (req, res) => {
 
   // Obtendo a mensagem que foi recebida através do body da requisição
-  const mensagem = req.body.mensagem;
+  const mensagem = req.body;
+
+  // Define o id da mensagem criada
+  const id = mensagens.length;
+
+  // Atualiza o objeto de mensagem enviado pela requisição com o id que foi calculado
+  mensagem.id = id;
+  
   // Insiro a mensagem na lista de mensagens
   mensagens.push(mensagem);
 
-  // Define o id da mensagem criada
-  const id = mensagens.length - 1;
-
   // Exibido o ID e mensagem, que no caso é o índice que ela foi adicionada
-  res.send(`Mensagem: ${mensagem} de id: ${id} foi criada`);
+  res.send(`Mensagem: ${mensagem.texto} de id: ${id} foi criada`);
 });
 
 // Read one
