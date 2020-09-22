@@ -32,7 +32,7 @@ const mensagens = [
 
 // Read all
 app.get('/mensagens', (req, res) => {
-  res.json(mensagens);
+  res.json(mensagens.filter(Boolean)); // Fornece somente as infos != null
 });
 
 // Create
@@ -71,7 +71,9 @@ app.get('/mensagens/:id', (req, res) => {
 app.put('/mensagens/:id', (req, res) => {
   const id = req.params.id;
 
-  mensagens[id] = req.body.mensagem;
+  const novoTexto = req.body.texto;
+
+  mensagens[id].texto = novoTexto;
 
   res.send(`Atualiza uma mensagem de id: ${id}`);
 });
