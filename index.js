@@ -55,16 +55,19 @@ app.get('/mensagens/:id', (req, res) => {
 app.put('/mensagens/:id', (req, res) => {
   const id = req.params.id;
 
-  // const mensagem = mensagens[id];
-
   mensagens[id] = req.body.mensagem;
 
-  res.send(`${id} Atualiza uma mensagem selecionada pelo id informado`);
+  res.send(`Atualiza uma mensagem de id: ${id}`);
 });
 
 // Delete one
 app.delete('/mensagens/:id', (req, res) => {
-  res.send('Remove uma mensagem selecionada pelo id informado');
+
+  const id = req.params.id;
+
+  delete mensagens[id];
+
+  res.send(`Removida mensagem de id: ${id}`);
 });
 
 app.listen(port, () => {
