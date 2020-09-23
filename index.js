@@ -126,11 +126,15 @@ const mongodb = require('mongodb');
   // CRUD -> Create, Read (Read All e Read Single), Update and Delete
   // CRUD -> Criar, Ler (Ler tudo e ler individualmente), atualizar e remover
 
-  const mensagens = [];
+  const db = await client.db('mongoOceanDataBase'); //conecta com o banco de dados
+
+  const mensagens = await db.collection('mensagens'); // traz as mensagens do banco de dados
 
   // Read All
-  app.get('/mensagens', (req, res) => {
-      res.json(mensagens.filter(Boolean));
+  app.get('/mensagens', async (req, res) => {
+      const findResult = await mensagens.find({}).toArray(); //converte tds os itens em array
+
+      res.json(findResult);
   });
 
   // Create
