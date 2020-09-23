@@ -177,14 +177,20 @@ const mongodb = require('mongodb');
     const mensagemAtual = await mensagens.findOne({ _id: mongodb.ObjectId(id)}, mensagemAtual);
     mensagemAtual.texto = novoTexto.texto;
     const resultado = await mensagens.updateOne({_id: mongodb.ObjectId(id)}, {$set: mensagemAtual });
-    
+
     console.log(resultado);
     res.json(mensagemAtual);
 
   });
 
   // Delete
-  app.delete('/mensagens/:id', (req, res) => {
+  app.delete('/mensagens/:id', async (req, res) => {
+
+  const id = req.params.id;
+  const resultado = await mensagens.deleteOne({ _id: mongodb.ObjectId(id)});
+  delete mensagens[id];
+  
+  res.send(`Removida mensagem de id: ${id}`);
   });
 
   app.listen(port, () => {
