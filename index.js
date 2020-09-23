@@ -153,7 +153,18 @@ const mongodb = require('mongodb');
   });
 
   // Read Single
-  app.get('/mensagens/:id', (req, res) => {
+  app.get('/mensagens/:id', async (req, res) => {
+
+    const id = req.params.id; //pega o id atravez dos parametros da req
+
+    const mensagem = await mensagens.findOne({_id: mongodb.ObjectId(id)}); //acesa a msg conforme o id
+  
+    res.json(mensagem);
+    // res.json({
+    //   id,
+    //   mensagem
+    // });
+
   });
 
   // Update
