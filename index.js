@@ -132,13 +132,24 @@ const mongodb = require('mongodb');
 
   // Read All
   app.get('/mensagens', async (req, res) => {
-      const findResult = await mensagens.find({}).toArray(); //converte tds os itens em array
+    const findResult = await mensagens.find({}).toArray(); //converte tds os itens em array
 
-      res.json(findResult);
+    res.json(findResult);
   });
 
   // Create
-  app.post('/mensagens', (req, res) => {
+  app.post('/mensagens', async (req, res) => {
+
+    // Obtendo a mensagem que foi recebida através do body da requisição
+    const mensagem = req.body;
+    
+    // Insiro a mensagem na collectio de mensagens do mongodb
+    const result = await mensagens.insertOne(mensagem);
+    console.log(result);
+    const objetoInserido = result.ops[0];
+    // Exibido o ID e mensagem, que no caso é o índice que ela foi adicionada
+    res.json(objetoInserido);
+
   });
 
   // Read Single
