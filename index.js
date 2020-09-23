@@ -168,7 +168,19 @@ const mongodb = require('mongodb');
   });
 
   // Update
-  app.put('/mensagens/:id', (req, res) => {
+  app.put('/mensagens/:id', async (req, res) => {
+
+    const id = req.params.id;
+
+    const novoTexto = req.body;
+
+    const mensagemAtual = await mensagens.findOne({ _id: mongodb.ObjectId(id)}, mensagemAtual);
+    mensagemAtual.texto = novoTexto.texto;
+    const resultado = await mensagens.updateOne({_id: mongodb.ObjectId(id)}, {$set: mensagemAtual });
+    
+    console.log(resultado);
+    res.json(mensagemAtual);
+
   });
 
   // Delete
