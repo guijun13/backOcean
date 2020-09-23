@@ -145,7 +145,6 @@ const mongodb = require('mongodb');
     
     // Insiro a mensagem na collectio de mensagens do mongodb
     const result = await mensagens.insertOne(mensagem);
-    console.log(result);
     const objetoInserido = result.ops[0];
     // Exibido o ID e mensagem, que no caso é o índice que ela foi adicionada
     res.json(objetoInserido);
@@ -172,13 +171,14 @@ const mongodb = require('mongodb');
 
     const id = req.params.id;
 
-    const novoTexto = req.body;
+    const novaMensagem = req.body;
 
-    const mensagemAtual = await mensagens.findOne({ _id: mongodb.ObjectId(id)}, mensagemAtual);
-    mensagemAtual.texto = novoTexto.texto;
+    const mensagemAtual = await mensagens.findOne({ _id: mongodb.ObjectId(id)});
+
+    mensagemAtual.texto = novaMensagem.texto;
+    // Atualiza a mensagem direto na lista de mensagens, acessando pelo ID que foi informado
     const resultado = await mensagens.updateOne({_id: mongodb.ObjectId(id)}, {$set: mensagemAtual });
 
-    console.log(resultado);
     res.json(mensagemAtual);
 
   });
